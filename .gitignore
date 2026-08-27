@@ -1,0 +1,24 @@
+# ── secrets / per-deployment state — MUST NEVER be committed ──
+*.secret
+*.authsecret
+.secret
+.secret.prev
+.secret.prev.until
+.authsecret
+.env
+.env.*
+
+# ── generated / per-deployment artifacts (rebuilt by the pipeline) ──
+client.obf.js
+vmpool/
+*/manifest.json
+*.bak
+*.bak-*
+*.preglfix
+*-STAGED
+*-staged
+
+# ── deps / os ──
+node_modules/
+npm-debug.log*
+.DS_Store
