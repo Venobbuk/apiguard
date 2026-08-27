@@ -4,8 +4,30 @@
   "description": "Self-hosted zero-dependency adaptive API protection: rotating token + risk-tiered proof-of-work + environment-binding + polymorphic VM sensor.",
   "main": "core.js",
   "scripts": {
-    "test": "node test/smoke.cjs"
+    "test": "node test/smoke.cjs",
+    "build:client": "node build/build-client.cjs",
+    "build:vmpool": "node vm-build-pool.cjs"
   },
+  "keywords": [
+    "anti-bot",
+    "bot-detection",
+    "proof-of-work",
+    "rate-limit",
+    "api-protection",
+    "fingerprint",
+    "argon2",
+    "self-hosted"
+  ],
   "license": "MIT",
-  "engines": { "node": ">=16" }
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {},
+  "optionalDependencies": {
+    "hash-wasm": "^4.9.0"
+  },
+  "devDependencies": {
+    "javascript-obfuscator": "^4.1.0",
+    "js-confuser": "^1.7.0"
+  }
 }
