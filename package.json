@@ -1,5 +1,5 @@
 {
-  "name": "apiguard",
+  "name": "@venobbuk/apiguard",
   "version": "0.1.0",
   "description": "Self-hosted zero-dependency adaptive API protection: rotating token + risk-tiered proof-of-work + environment-binding + polymorphic VM sensor.",
   "main": "core.js",
