@@ -77,6 +77,13 @@ user cools back to invisible. PoW difficulty is **HMAC-locked** — a client can
 pre-builds a rotating pool of polymorphic VMs. Each rotation invalidates in-progress reverse
 engineering. A grace window keeps the previous variant valid so users never see a re-challenge blip.
 
+**Pool safety gate:** `vmsensor.loadDisk` serves a pool only if it carries a `verified` marker;
+without it, it falls back to the always-consistent in-memory build. `vm-build-pool.cjs` writes that
+marker after every VM passes its callable+transparent assertion. For a deeper pre-swap check, run
+`GUARD_SECRET=.. VM_SECRET=.. node build/verify-client-vs-pool.cjs <client.js> <poolVersion>` — it
+boots your client against **every** VM asset through the real guard (each user maps to one asset, so a
+single bad asset is invisible to a smoke test) and only writes the marker on a fully clean pass.
+
 ## Security notes for adopters
 
 - **Bring your own secret.** `config.secret` (≥16 chars, high-entropy) is per-deployment and must
