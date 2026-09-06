@@ -44,6 +44,9 @@ for (let i = 0; i < N; i++){
 }
 delete global.window;
 fs.writeFileSync(path.join(dir, 'manifest.json'), JSON.stringify({ version, N, baselines, built: Date.now() }));
+// Reaching here means all N VMs passed the callable+transparent assertion above, so mark the pool VERIFIED.
+// vmsensor.loadDisk refuses to serve a pool without this marker (falls back to the plaintext build instead).
+fs.writeFileSync(path.join(dir, 'verified'), new Date().toISOString() + '\n');
 const sample = fs.readFileSync(path.join(dir, 'vm-0.js'), 'utf8');
 console.log('\nbuilt OBFUSCATED pool v' + version + ' N=' + N + ' in ' + ((Date.now() - t) / 1000).toFixed(1) + 's (all ' + N + ' asserted callable+transparent)');
 console.log('vm-0 size ' + sample.length + 'B; raw `case N:` visible? ' + /case [0-9]+:/.test(sample) + ' (false=opaque)');

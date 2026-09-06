@@ -37,6 +37,11 @@ function buildMem(version, N){
 // load a PRE-BUILT OBFUSCATED disk pool: assets + manifest baselines; re-derive gens for expected().
 function loadDisk(version){
   const dir = path.join(__dirname, 'vmpool', version);
+  // Serve a disk pool ONLY if it carries a `verified` marker (written by vm-build-pool.cjs after every VM
+  // asset passed the callable+transparent assertion). An unverified/partial pool throws here -> init()
+  // falls back to the in-memory plaintext build, which is always self-consistent. (Fix 2026-09-03: a bad
+  // rotation build threw per-asset for exactly the users mapped to those assets — invisible to a smoke test.)
+  if (!fs.existsSync(path.join(dir, 'verified'))) throw new Error('pool ' + version + ' not verified');
   const mani = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf8'));
   const N = mani.N, assets = new Array(N), verifiers = new Array(N), gens = new Array(N);
   for (let i = 0; i < N; i++){
